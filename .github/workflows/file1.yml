@@ -16,4 +16,16 @@ jobs:
       run: echo "Pipeline running"
 
     - name: Fail Step
-      run: exit 0
+      run: exit 1   # 🔴 Force failure for testing
+
+    - name: Create Issue on Failure
+      if: failure()
+      uses: actions/github-script@v7
+      with:
+        script: |
+          github.rest.issues.create({
+            owner: context.repo.owner,
+            repo: context.repo.repo,
+            title: "🚨 Workflow Failed",
+            body: "The GitHub Actions workflow failed. Please check logs in Actions tab."
+          })
