@@ -15,9 +15,6 @@ jobs:
     - name: Run Step
       run: echo "Pipeline running"
 
-    - name: Fail Step
-      run: exit 1   # 🔴 Force failure for testing
-
     - name: Create Issue on Failure
       if: failure()
       uses: actions/github-script@v7
